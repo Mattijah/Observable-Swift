@@ -71,7 +71,7 @@ public protocol OwnableObservable: AnyObservable {
 
 }
 
-// observable <- value
+// (observable <- value) or (observable.value <- observable.value)
 infix operator <-
 
 // value = observable^
@@ -115,6 +115,11 @@ public func += <T> (event: EventReference<ValueChange<T>>, handler: @escaping (T
 @discardableResult
 public func += <T> (event: EventReference<ValueChange<T>>, handler: @escaping (T) -> ()) -> EventSubscription<ValueChange<T>> {
     return event.add({ handler($0.newValue) })
+}
+
+// for observable values on observable values
+public func <- <T : WritableObservable & UnownableObservable> (x: inout T, y: T) {
+    x.value = y.value
 }
 
 // for observable values on variables

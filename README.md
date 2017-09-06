@@ -55,6 +55,12 @@ x.afterChange += { println("Changed x from \($0) to \($1)") }
 // change the value, prints "Changed x from 0 to 42"
 x <- 42
 // alternativelyL x ^= 42, without operators: x.value = 42
+
+
+var y = Observable(0)
+
+// Copy the value from one observable to another one, prints "Changed x from 42 to 0"
+x <- y
 ```
 
 You can, of course, have observable properties in a `class` or a `struct`:
